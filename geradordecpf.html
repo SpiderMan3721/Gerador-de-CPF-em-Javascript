@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="initial-scale=1, width=device-width"/>
+    <title>Gerador de CPF</title>
+    <style type="text/css">
+      * {
+        font-size: 1.08em;
+        font-family: Verdana, Arial, sans-serif;
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #fafafa;
+        color: #000;
+      }
+      button {
+        outline: none;
+        background: #48f;
+        color: #fff;
+        border: 2px solid #69f;
+      }
+      div#CPFs {
+        width: 250px;
+        height: 270px;
+        overflow: auto;
+        border: 1px solid #000;
+        border-top: 2px solid #aaa;
+        border-bottom: 2px solid #aaa;
+        outline: none;
+        text-align: center;
+        font-size: 0.96em;
+      }
+    </style>
+</head>
+<body>
+    
+    <br/>
+    <center>
+        <noscript>
+            <p style="color:red">Javascript não suportado!</p>
+        </noscript>
+        
+        <div id="divCPF"></div>
+        
+        <p id="uf">Possíveis estados: ???</p>
+        
+        <label>Pontuação</label>
+        <input type="checkbox" id="pontuacao">
+        <br/><br/>
+        
+        <button onclick="gerarCPF()">Gerar CPF</button>
+        <br/><br/>
+        
+        <div id="CPFs"></div>
+    </center>
+    
+    <script>
+        let pontuacao,
+            click = false,
+            divCPF = document.getElementById("divCPF"),
+            CPFs = document.getElementById("CPFs");
+        
+        function verificaPontos(force)
+        {
+            pt = document.getElementById('pontuacao');
+            if(pt.checked)
+            {
+                pontuacao = true;
+            }
+            else
+            {
+                pontuacao = false;
+            }
+        }
+        verificaPontos();
+        
+        function gerarCPF()
+        {
+            click = true;
+            verificaPontos();
+            window.clearInterval(model);
+            
+            function randomiza(n)
+            {
+                let ranNum = Math.round(Math.random()*n);
+                return ranNum;
+            }
+            
+            function mod(dividendo,divisor)
+            {
+                return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));
+            }
+            
+            var n = 9;
+            var n1 = randomiza(n);
+            var n2 = randomiza(n);
+            var n3 = randomiza(n);
+            var n4 = randomiza(n);
+            var n5 = randomiza(n);
+            var n6 = randomiza(n);
+            var n7 = randomiza(n);
+            var n8 = randomiza(n);
+            var n9 = randomiza(n);
+            var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;
+            d1 = 11 - ( mod(d1,11) );
+            if (d1>=10) d1 = 0;
+            var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;
+            d2 = 11 - ( mod(d2,11) );
+            if (d2>=10) d2 = 0;
+            if (pontuacao) cpf = ''+n1+n2+n3+'.'+n4+n5+n6+'.'+n7+n8+n9+'-'+d1+d2;
+            else cpf = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;
+            
+            divCPF.innerHTML = cpf;
+            CPFs.innerHTML += cpf+"<br>";
+            
+            uf = document.getElementById("uf");
+            switch(n9)
+            {
+                case 0:
+                    uf.innerHTML = "Possíveis estados: RS.";
+                break;
+                case 1:
+                    uf.innerHTML = "Possíveis estados: DF, GO, MT, MS e TO.";
+                break;
+                case 2:
+                    uf.innerHTML = "Possíveis estados: AM, PA, RR, AP, AC e RO.";
+                break;
+                case 3:
+                    uf.innerHTML = "Possíveis estados: CE, MA e PI.";
+                break;
+                case 4:
+                    uf.innerHTML = "Possíveis estados: PB, PE, AL e RN.";
+                break;
+                case 5:
+                    uf.innerHTML = "Possíveis estados: BA e SE.";
+                break;
+                case 6:
+                    uf.innerHTML = "Possíveis estados: MG.";
+                break;
+                case 7:
+                    uf.innerHTML = "Possíveis estados: RJ e ES.";
+                break;
+                case 8:
+                    uf.innerHTML = "Possíveis estados: SP.";
+                break;
+                case 9:
+                    uf.innerHTML = "Possíveis estados: PR e SC.";
+                break;
+            }
+        }
+        
+        function modeloVisual()
+        {
+            if(pt.checked)
+            {
+               divCPF.innerHTML = "000.000.000-00";
+            }
+            else
+            {
+                divCPF.innerHTML = "00000000000";
+            }
+         }
+         
+         if(!click)
+         {
+            model = window.setInterval(modeloVisual, 100);
+         }
+    </script>
+    
+</body>
+</html>
