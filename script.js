@@ -110,9 +110,9 @@ let pontuacao,
         {
             divCPF.innerHTML = "00000000000";
         }
-     }
+    }
         
-     if(!click)
-     {
-        model = window.setInterval(modeloVisual, 100);
-     }
+    if(!click)
+    {
+       model = window.setInterval(modeloVisual, 100);
+    }
