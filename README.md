@@ -1,4 +1,4 @@
 # Gerador de CPF em Javascript
-Script simples que gera CPFs
+Script simples que gera númeeos de CPF
 válidos e informa os possíveis estados
-de cada CPF gerado.
+de cada um dos CPFs gerados.
