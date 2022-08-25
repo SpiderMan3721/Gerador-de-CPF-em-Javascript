@@ -6,7 +6,7 @@ let pontuacao,
     
     
     /////////////////////////////////
-    function verificaPontuacao(force)
+    function verificaPontuacao()
     {
         pt = document.getElementById('pontuacao');
         
